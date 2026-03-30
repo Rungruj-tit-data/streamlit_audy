@@ -15,6 +15,53 @@ AUDY_LAMBDA_URL = "https://qy3qmcho2xuvinjjzwnkxpdmka0hythn.lambda-url.ap-southe
 
 st.set_page_config(page_title="Audy Chatbot", page_icon="💬", layout="wide")
 
+# Inject thinking animation CSS
+st.markdown("""
+<style>
+@keyframes audy-bounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.35; }
+  30% { transform: translateY(-6px); opacity: 1; }
+}
+.audy-thinking {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+}
+.audy-dots {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.audy-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #888;
+  animation: audy-bounce 1.1s ease-in-out infinite;
+}
+.audy-dot:nth-child(1) { animation-delay: 0s; }
+.audy-dot:nth-child(2) { animation-delay: 0.18s; }
+.audy-dot:nth-child(3) { animation-delay: 0.36s; }
+.audy-label {
+  color: #888;
+  font-size: 0.88em;
+  font-style: italic;
+}
+</style>
+""", unsafe_allow_html=True)
+
+THINKING_HTML = """
+<div class="audy-thinking">
+  <div class="audy-dots">
+    <span class="audy-dot"></span>
+    <span class="audy-dot"></span>
+    <span class="audy-dot"></span>
+  </div>
+  <span class="audy-label">Thinking...</span>
+</div>
+"""
+
 
 # -----------------------------
 # Helpers
@@ -184,7 +231,7 @@ if prompt:
         info_placeholder = st.empty()
         full_response = ""
 
-        response_placeholder.markdown("_Thinking..._")
+        response_placeholder.markdown(THINKING_HTML, unsafe_allow_html=True)
         start_time = time.time()
 
         for event in invoke_lambda_stream(
