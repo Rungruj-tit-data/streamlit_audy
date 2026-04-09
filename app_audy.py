@@ -11,7 +11,7 @@ import streamlit as st
 # -----------------------------
 # Config
 # -----------------------------
-AUDY_LAMBDA_URL = "https://qy3qmcho2xuvinjjzwnkxpdmka0hythn.lambda-url.ap-southeast-1.on.aws/"
+AUDY_LAMBDA_URL = "https://vyaa4ztxawumconmi6uwqt6j5e0svxjl.lambda-url.ap-southeast-1.on.aws/"
 
 st.set_page_config(page_title="Audy Chatbot", page_icon="💬", layout="wide")
 
