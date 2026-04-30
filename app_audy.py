@@ -159,9 +159,15 @@ if not active:
 # Render helper
 # -----------------------------
 _URL_RE = re.compile(r'(https?://\S+)')
+_MD_IMAGE_RE = re.compile(r'!\[.*?\]\(https?://\S+?\)')
 
 
 def render_content(text: str):
+    # Markdown image syntax ![alt](url) — let st.markdown handle it natively
+    if _MD_IMAGE_RE.search(text):
+        st.markdown(text)
+        return
+    # Bare URLs — render as images
     parts = _URL_RE.split(text)
     for part in parts:
         if _URL_RE.fullmatch(part):
